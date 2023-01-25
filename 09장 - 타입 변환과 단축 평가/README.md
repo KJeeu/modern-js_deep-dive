@@ -285,12 +285,4 @@ console.log(foo); //default string
 ```javascript
 var foo = '' ?? 'default string';
 console.log(foo); // ""
-```
->📌 <br>
-
-🌟
-🍀
-
-```javascript
-
-```
+``
