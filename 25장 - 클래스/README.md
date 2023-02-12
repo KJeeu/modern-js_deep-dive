@@ -146,6 +146,37 @@ class Person {
 
 모든 클래스 필드는 인스턴스 프로퍼티가 됨
 
+### private 필드
+최신브라우저, Node.js에 구현 가능<br>
+클래스 몸체에 정의해야함<br>
+접근자 프로퍼티를 통해 간접적 접근 가능
+
+```javascript
+class Person {
+    //private 필드 정의
+    #name = '';
+
+    constructor(name) {
+        this.#name = name;
+    }
+
+    get name(){
+        return this.#name.trim();
+    }
+}
+
+const me = new Person(' Lee ');
+console.log(me.name); //Lee
+```
+
+## 25.8 상속에 의한 클래스 확장
+기존 클래스를 상속받아 새로운 클래스를 확장하여 정의함
+
+클래스는 상속을 통해 기존 클래스를 확장할 수 있는 문법이 기본적으로 제공되지만 생성자 함수는 그렇지 않음
+
+```javascript
+class Bird extends Animal{    }
+```
 🌟
 🍀
 
