@@ -177,10 +177,18 @@ console.log(me.name); //Lee
 ```javascript
 class Bird extends Animal{    }
 ```
-🌟
-🍀
+서브클래스/수퍼클래스
 
-```javascript
+### super키워드
+1. super호출 - 수퍼클래스의 constructor 호출
+2. super참조 - 수퍼클래스의 메서드 호출
 
-```
->📌  <br>
+수퍼클래스의 constructor 내부 추가한 프로퍼티가 변경될경우 서브클래스의 constructor 생략 불가능
+
+이때 수퍼클래스는 super()를 통해 가져옴
+
+🌟 서브클래스는 자신이 직접 인스턴스를 생성하지 않고 수퍼클래스에게 인스턴스 생성을 위임함. 이것이 서브클래스의 constructor에서 반드시 super를 호출해야 하는 이유임
+
+### new.target은 서브클래스가 생성하는 인스턴스로 처리됨
+
+### constructor에서 super 호출 전에 this를 참조할 수 없는 이유 : super가 반환한 인스턴스가 this에 바인딩된다. 서브클래스는 별도의 인스턴스를 생성하지 않고 super가 반환한 인스턴스를 this에 바인딩하여 그대로 사용함.
