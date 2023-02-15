@@ -36,6 +36,47 @@ prototype 프로퍼티가 없고 프로토타입을 생성하지 않음
 
 ES6 메서드가 아닌 함수는 super 키워드 사용할 수 없음
 
+---
+## 26.3 화살표 함수
+`function`키워드 대신 화살표를 사용하여 간략하게 함수 정의(기능도 간략화)
+
+특히 콜백 함수 내부에서 this가 전역 객체를 가리키는 문제 해결 대안으로 유용함
+
+**함수정의**
+```javascript
+const multiply = (x,y) => x*y;
+multiply(2, 3); //6
+```
+
+**매개변수 선언**
+```javascript
+const arr = x => {...};
+
+const arr2 = () => {...}; 
+```
+**함수 몸체 정의**
+```javascript
+//표현식이 아닌 문은 중괄호{}처리 해야함
+const power = x => x**2;
+const arr = () => { const x = 1; };
+
+//객체 리터럴 반환시 소괄호()로 감싸줘야함
+const create = (id, content) => ({ id, content });
+
+//함수 몸체 여러개의 문 구성
+const sum = (a, b) => {
+    const result = a + b;
+    return result;
+};
+
+//고차 함수 가능
+[1,2,3].map(v => v*2);
+```
+
+### 일반 함수와 화살표 함수 차이
+1. 화살표 함수는 인스턴스를 생성할 수 없음(생성자 함수로서 호출 불가능)
+2. 중복된 매개변수 이름 선언 불가능
+3. 함수 자체의 this, arguments, super, new.target 바인딩 갖지 않음
 
 
 > 📌  <br>
