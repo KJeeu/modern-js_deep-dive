@@ -78,6 +78,76 @@ const sum = (a, b) => {
 2. 중복된 매개변수 이름 선언 불가능
 3. 함수 자체의 this, arguments, super, new.target 바인딩 갖지 않음
 
+### this
+화살표 함수와 일반함수의 this는 다르게 작동함. 이는 콜백 함수 내부의 this가 외부 함수의 this와 다르기 때문에 발생하는 문제때문이다
+
+this는 함수의 호출 방식에 따라 동적으로 결정된다
+
+일반 함수로서 호출되는 함수 내부의 this는 전역 객체를 가리킴. 그런데 클래스 내부의 모든 코드에는 strict mode가 암묵적으로 적용되므로 메서드의 콜백 함수 내부의  this에 undefined가 바인딩됨<br>
+그러나 화살표 함수를 사용하여 콜백 함수 내부의 this문제 해결 가능
+
+**화살표 함수는 함수 자체의 this 바인딩을 갖지 않음. 따라서 화살표 함수 내부에서 this참조시 상위 스코프의 this를 그대로 참조함(lexical this)** -> 함수가 정의된 위치에 의해 this가 결정됨
+
+```javascript
+() => this.x;
+
+(function () {return this.x;}).bind(this);
+```
+메서드를 화살표 함수로 정의하는 것은 피해야함.
+
+```javascript
+//bad
+const person = {
+    name: 'Lee',
+    sayHi: () => console.log("hi");
+};
+
+//good
+const person = {
+    name: 'Lee',
+    sayHi() {
+        console.log("hi");
+    };
+};
+```
+sayHi 프로퍼티에 할당된 화살표 함수 내부의 this는 상위 스코프인 전역 this가 가리키는 전역 객체를 가리킴.(window)
+
+ES6 메서드 동적 추가시 객체 리터럴 바인딩하고 프로토타입의 constructor 프로퍼티와 생성자 함수 간의 연결 재설정
+
+```javascript
+function Person(name){
+    this.name = name;
+}
+
+Person.prototype = {
+    constructor: Person,
+    sayHi(){ console.log("hi");}
+};
+
+const person = new Person('Jeeu');
+person.sayHi();
+```
+
+```javascript
+//bad
+class Person{
+    name = 'Lee';
+    sayHi = () => console.log("hi");
+}
+
+//good
+class Person{
+    name = 'Lee';
+    sayHi() { console.log("hi");}
+}
+```
+sayHi 클래스 필드에 할당한 화살표 함수의 상위 스코프는 constructor다. constructor내부의 this 바인딩은 클래스가 생성한 인스턴스를 가리키므로 sayHi 클래스 필드에 할당한 화살표 함수 내부의 this 또한 클래스가 생성한 인스턴스를 가리킴
+
+하지만 클래스 필드에 할당한 화살표 함수는 프로토타입 메서드가 아닌 인스턴스 메서드가됨. 따라서 메서드 정의시 es6메서드를 사용하는 것이 좋음
+
+
+### super
+화살표 함수는 함수 자체의 super 바인딩을 갖지 않으며 화살표 함수 내부에서 super 참조시 상위 스코프의 super참조함
 
 > 📌  <br>
 > 
